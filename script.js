@@ -1,6 +1,7 @@
 const container = document.querySelector('.container');
 let fidelity = 25;
 let isRainbowMode = false;
+let erase = false;
 let isMouseDown = false;
 
 function createSketchBoard(fidelity) {
@@ -19,8 +20,12 @@ function createSketchBoard(fidelity) {
                     square.style.backgroundColor = getRandomColor();
                 } else {
                     square.style.backgroundColor = 'black'
-                }
-            })
+                };
+
+                if (erase) {
+                square.style.backgroundColor = 'white';
+                };
+            });
 
             square.addEventListener('mouseenter', () => {
                 if (isMouseDown) {
@@ -29,16 +34,20 @@ function createSketchBoard(fidelity) {
                     } else {
                         square.style.backgroundColor = "black";
                     }
-                }
-            })
+
+                    if (erase) {
+                        square.style.backgroundColor = 'white';
+                        };
+                };
+            });
 
             square.addEventListener('mouseup', () => {
                 isMouseDown = false;
-            })
-        }
+            });
+        };
 
-    }
-}
+    };
+};
 
 document.addEventListener('DOMContentLoaded', function() {
     createSketchBoard(fidelity);
@@ -80,21 +89,34 @@ btn.addEventListener('click', () => {
         }
         createSketchBoard(fidelity);
     }
-})
+});
 
 //add rainbow sketch ability
 
 function getRandomColor() {
     return '#' + Math.floor(Math.random()*16777215).toString(16);
-}
-
-// rainbowBtn = document.querySelector('.rainbowBtn');
+};
 
 const rainbowBtn = document.querySelector('#rainbowBtn');
 
 rainbowBtn.addEventListener('click', () => {
     isRainbowMode = !isRainbowMode;
     rainbowBtn.textContent = isRainbowMode ? "Black Mode" : "Rainbow Mode!";
-    rainbowBtn.style.backgroundColor = isRainbowMode ? "black" : "white";
-    rainbowBtn.style.color = isRainbowMode ? "white": "black";
+    rainbowBtn.style.background = isRainbowMode ? "black": "";
+});
+
+// add eraser
+
+const eraser = document.querySelector('#eraser');
+
+eraser.addEventListener('click', () => {
+    erase = !erase;
+    if (erase) {
+        eraser.style.backgroundColor = 'DarkGrey';
+    } else {
+        eraser.style.backgroundColor = 'white';
+    };
+
+    eraser.style.color = erase ? 'white' : 'DarkGrey';
+    eraser.textContent = erase ? 'Turn off eraser' : 'Turn on eraser';
 });

@@ -73,8 +73,19 @@ h1 {
     flex: 1 1 0;
 }
 
-#rainbowBtn {
+#rainbowBtn, #eraser {
     border: 0px;
     border-radius: 8px;
     padding: 8px;
+}
+
+#rainbowBtn {
+    color: white;
+    background: linear-gradient(to right, violet, indigo, blue, green, yellow, orange, red);
+}
+
+#eraser {
+    margin-top: 8px;
+    color: DarkGrey;
+    background-color: white;
 }
