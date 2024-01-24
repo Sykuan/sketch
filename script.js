@@ -1,6 +1,7 @@
 const container = document.querySelector('.container');
-
-let fidelity = 4;
+let fidelity = 25;
+let isRainbowMode = false;
+let isMouseDown = false;
 
 function createSketchBoard(fidelity) {
     for (let i = 0; i < fidelity; i++) {
@@ -12,31 +13,53 @@ function createSketchBoard(fidelity) {
             square.classList.add('square');
             div.appendChild(square);
 
-            square.addEventListener('mouseenter', () => {
-                if (isMouseDown) {
-                square.style.backgroundColor = "black";
+            square.addEventListener('mousedown', () => {
+                isMouseDown = true;
+                if (isRainbowMode) {
+                    square.style.backgroundColor = getRandomColor();
+                } else {
+                    square.style.backgroundColor = 'black'
                 }
             })
+
+            square.addEventListener('mouseenter', () => {
+                if (isMouseDown) {
+                    if (isRainbowMode) {
+                        square.style.backgroundColor = getRandomColor();
+                    } else {
+                        square.style.backgroundColor = "black";
+                    }
+                }
+            })
+
+            square.addEventListener('mouseup', () => {
+                isMouseDown = false;
+            })
         }
+
     }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
     createSketchBoard(fidelity);
 
-        // Event listener for mousedown to set isMouseDown to true
-        container.addEventListener('mousedown', (event) => {
-            isMouseDown = true;
+    // // Event listener for mousedown to set isMouseDown to true
+    // container.addEventListener('mousedown', (event) => {
+    //     if (isMouseDown) {
+    //         if (event.target.classList.contains('square')) {
+    //             if (isRainbowMode) {
+    //                 event.target.style.backgroundColor = getRandomColor();
+    //             } else {
+    //             event.target.style.backgroundColor = 'black';
+    //             }
+    //         }
+    //     }
+    // });
 
-            if (event.target.classList.contains('square')) {
-                event.target.style.backgroundColor = 'black';
-            }
-        });
-    
-        // Event listener for mouseup to set isMouseDown to false
-        container.addEventListener('mouseup', () => {
-            isMouseDown = false;
-        });
+    // // Event listener for mouseup to set isMouseDown to false
+    // container.addEventListener('mouseup', () => {
+    //     isMouseDown = false;
+    // });
 });
 
 //Creating option to set sizing
@@ -59,12 +82,19 @@ btn.addEventListener('click', () => {
     }
 })
 
-//Creating sketch effect
+//add rainbow sketch ability
 
-// const squares = document.querySelectorAll('.square');
+function getRandomColor() {
+    return '#' + Math.floor(Math.random()*16777215).toString(16);
+}
 
-// squares.forEach(square => {
-//     square.addEventListener('mouseenter', () => {
-//     square.style.backgroundColor = "black";
-//     });
-// });
+// rainbowBtn = document.querySelector('.rainbowBtn');
+
+const rainbowBtn = document.querySelector('#rainbowBtn');
+
+rainbowBtn.addEventListener('click', () => {
+    isRainbowMode = !isRainbowMode;
+    rainbowBtn.textContent = isRainbowMode ? "Black Mode" : "Rainbow Mode!";
+    rainbowBtn.style.backgroundColor = isRainbowMode ? "black" : "white";
+    rainbowBtn.style.color = isRainbowMode ? "white": "black";
+});

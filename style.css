@@ -72,3 +72,9 @@ h1 {
     height: 1000px;
     flex: 1 1 0;
 }
+
+#rainbowBtn {
+    border: 0px;
+    border-radius: 8px;
+    padding: 8px;
+}
